@@ -5,6 +5,7 @@ export default {
     props: {
         easyForm: Object,
         easyColumns: Array,
+        methods: Object
     },
     data() {
         return {
@@ -27,9 +28,6 @@ export default {
         }
     },
     methods: {
-        onSubmit() {
-            console.log(JSON.stringify(this.form));
-        },
         formatMoney(value) {
             return `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
@@ -154,8 +152,10 @@ export default {
         return (<el-form ref="form" model={this.form} label-width="80px" vOn:input={(v) => console.log(v)}>
             {...formItems}
             <el-form-item>
-                <el-button type="primary" onClick={this.onSubmit}>提交</el-button>
-                <el-button>取消</el-button>
+                <el-button type="primary" onClick={this.methods.onSubmit(this.form)}>提交</el-button>
+                <el-button onClick={() => {
+                    this.methods.onCancel();
+                }}>取消</el-button>
             </el-form-item>
         </el-form>);
     },

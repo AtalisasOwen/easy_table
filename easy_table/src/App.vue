@@ -2,7 +2,7 @@
     <div id="app">
         <Hello/>
         <EasyTable :easy-columns="columns" :data="form"/>
-        <EasyForm :easy-form="form[0]" :easy-columns="columns" />
+
     </div>
 </template>
 
@@ -19,7 +19,7 @@
                 form: [
                     {
                         date: "2016-05-02",
-                        name: "王小虎",
+                        name: "王小虎1",
                         address: "上海市普陀区金沙江路 1518 弄",
                         money: 20006600,
                         dprt: {
@@ -35,7 +35,7 @@
                     },
                     {
                         date: "2016-05-02",
-                        name: "王小虎",
+                        name: "王小虎2",
                         address: "上海市普陀区金沙江路 1518 弄",
                         money: 20006600,
                         dprt: {
@@ -51,7 +51,7 @@
                     },
                     {
                         date: "2016-05-02",
-                        name: "王小虎",
+                        name: "王小虎3",
                         address: "上海市普陀区金沙江路 1518 弄",
                         money: 20006600,
                         dprt: {
@@ -81,7 +81,6 @@
                     {
                         prop: "name",
                         label: "姓名",
-                        disabled: true,
                     },
                     {
                         prop: "address",
@@ -131,7 +130,7 @@
         font-family: Avenir, Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        text-align: center;
+
         color: #2c3e50;
         margin-top: 60px;
     }
