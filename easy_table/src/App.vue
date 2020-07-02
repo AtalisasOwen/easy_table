@@ -8,6 +8,9 @@
             <template #dprt.name="props">
                 <el-tag>{{ props.row.dprt.name }}</el-tag>
             </template>
+            <template #ddd.dsdsd.birthday="props">
+                <span>{{ props.row.ddd.dsdsd.birthday.slice(0,10) }}</span>
+            </template>
         </EasyTable>
     </div>
 </template>
