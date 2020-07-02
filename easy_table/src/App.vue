@@ -1,7 +1,13 @@
 <template>
     <div id="app">
         <Hello/>
-        <EasyTable :easy-columns="columns" :data="form" :form-methods="formMethods"/>
+        <EasyTable :easy-columns="columns"
+                :data="form"
+                :form-methods="formMethods">
+            <template #dprt.name="props">
+                <el-tag>{{ props.row.dprt.name }}</el-tag>
+            </template>
+        </EasyTable>
     </div>
 </template>
 

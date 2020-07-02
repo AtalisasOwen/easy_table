@@ -42,12 +42,10 @@ export default {
             label={c.label}
             show-overflow-tooltip={true}
             width={c.width ? c.width : 120}
-            // scopedSlots={{
-            //     default: (props) => <p>LLLLL</p>
-            // }}
+            scopedSlots={{
+                default: this.$scopedSlots[c.prop]
+            }}
             >
-                {//TODO
-                    h(c.render)}
             </el-table-column>);
         return (
             <div>
