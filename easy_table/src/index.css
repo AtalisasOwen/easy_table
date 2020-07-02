@@ -1,0 +1,76 @@
+body {
+    height: 100%;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+
+label {
+    font-weight: 700;
+}
+
+html {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+#app {
+    height: 100%;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+a:focus,
+a:active {
+    outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+}
+
+div:focus {
+    outline: none;
+}
+
+
+.filter-container {
+    padding-bottom: 10px;
+}
+
+.filter-item {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 2px;
+    margin-left: 10px;
+}
+
+
+.app-container {
+    padding: 20px;
+}
+
+.link-type,
+.link-type:focus {
+    color: #337ab7;
+    cursor: pointer;
+
+
+}
+
+.link-type:hover {
+    color: rgb(32, 160, 255);
+}
+
+.el-table {
+    color: black;
+}
