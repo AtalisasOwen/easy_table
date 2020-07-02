@@ -1,10 +1,11 @@
 import EasyForm from "./EasyForm";
-import fa from "element-ui/src/locale/lang/fa";
+
 
 export default {
     props: {
       data: Array,
-      easyColumns: Array
+      easyColumns: Array,
+      formMethods: Object
     },
     data(){
         return {
@@ -23,27 +24,35 @@ export default {
         },
       onEdit(props){
           return () =>{
-              this.dialogVisible = true;
               this.form = props.row;
+              this.dialogVisible = true;
           }
       },
         onCreate(){
-            this.dialogVisible = true;
             this.form = undefined
+            this.dialogVisible = true;
         }
     },
     render(h){
-        const elColumns = this.easyColumns.map(c =>
+        const elColumns = this.easyColumns
+            .filter(c => !c.hideInTable)
+            .map(c =>
             <el-table-column
             prop={c.prop}
             label={c.label}
             show-overflow-tooltip={true}
-            width={c.width ? c.width : 120}>
-        </el-table-column>);
+            width={c.width ? c.width : 120}
+            // scopedSlots={{
+            //     default: (props) => <p>LLLLL</p>
+            // }}
+            >
+                {//TODO
+                    h(c.render)}
+            </el-table-column>);
         return (
             <div>
                 <div>
-                    <el-button type="primary" onClick={this.onCreate}>新建</el-button>
+                    <el-button icon="el-icon-plus" type="primary" onClick={this.onCreate}>新建</el-button>
                 </div>
                 <el-table
                     data={this.data}
@@ -69,13 +78,19 @@ export default {
                     title="提示"
                     visible={this.dialogVisible}
                     width="35%">
-                    <EasyForm easyForm={ this.form === undefined ? undefined : {...this.form}} easyColumns={this.easyColumns} methods={
+                    <EasyForm easyForm={ this.form } easyColumns={this.easyColumns} methods={
                         {
-                            onCancel: () => this.dialogVisible = false,
-                            onSubmit: (form) => () => {
-                                console.log(JSON.stringify(form));
+                            onCancel: () => {
                                 this.dialogVisible = false
-                            }
+                            },
+                            onSubmitCreate: (form) => {
+                                this.formMethods.onSubmitCreate(form)
+                                this.dialogVisible = false
+                            },
+                            onSubmitUpdate: (form) => {
+                                this.formMethods.onSubmitUpdate(form)
+                                this.dialogVisible = false
+                            },
                         }
                     } />
                 </el-dialog>

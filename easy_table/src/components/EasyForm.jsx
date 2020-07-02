@@ -14,6 +14,21 @@ export default {
             mode: null
         };
     },
+    watch:{
+        easyForm(newValue, oldValue){
+            if (this.easyForm){
+                this.form = this.makeProxy(newValue)
+                this.mode = 'edit'
+            }else{
+                const form = {};
+                this.easyColumns.forEach(col => {
+                    this.createEmptyForm(form, col.prop);
+                });
+                this.form = this.makeProxy(form)
+                this.mode = 'create'
+            }
+        }
+    },
     created() {
         if (this.easyForm){
             this.form = this.makeProxy(this.easyForm)
@@ -79,6 +94,13 @@ export default {
                     return this.get(target, p) !== undefined;
                 },
             })
+        },
+        onSubmit(){
+            if (this.mode === 'create'){
+                this.methods.onSubmitCreate(this.form)
+            } else {
+                this.methods.onSubmitUpdate(this.form)
+            }
         }
     },
     render(h) {
@@ -152,10 +174,8 @@ export default {
         return (<el-form ref="form" model={this.form} label-width="80px" vOn:input={(v) => console.log(v)}>
             {...formItems}
             <el-form-item>
-                <el-button type="primary" onClick={this.methods.onSubmit(this.form)}>提交</el-button>
-                <el-button onClick={() => {
-                    this.methods.onCancel();
-                }}>取消</el-button>
+                <el-button type="primary" onClick={this.onSubmit}>提交</el-button>
+                <el-button onClick={ this.methods.onCancel }>取消</el-button>
             </el-form-item>
         </el-form>);
     },

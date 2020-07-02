@@ -1,13 +1,11 @@
 <template>
     <div id="app">
         <Hello/>
-        <EasyTable :easy-columns="columns" :data="form"/>
-
+        <EasyTable :easy-columns="columns" :data="form" :form-methods="formMethods"/>
     </div>
 </template>
 
 <script>
-    import HelloWorld from "./components/HelloWorld.vue";
     import Hello from "./components/Hello.jsx";
     import EasyForm from "./components/EasyForm";
     import EasyTable from "./components/EasyTable";
@@ -100,11 +98,13 @@
                                 value: "B部门", id: 2,
                             },
                         ],
+                        hideInTable: true
                     },
                     {
                         prop: "dprt.name",
                         label: "部门名称",
                         hideInForm: true,
+                        render: Hello
                     },
                     {
                         prop: "dprt.phone",
@@ -117,6 +117,16 @@
                         width: 180,
                     },
                 ],
+                formMethods:{
+                    onSubmitCreate: (form) => {
+                        console.log("cccc")
+                        console.log(JSON.stringify(form));
+                    },
+                    onSubmitUpdate: (form) => {
+                        console.log("uuuu")
+                        console.log(JSON.stringify(form));
+                    }
+                }
             };
         },
         components: {

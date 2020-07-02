@@ -1,5 +1,1 @@
-export default {
-    render(h) {
-        return <h1>dasd</h1>
-    },
-}
+export default ({props}) => <h4>AAA</h4>
