@@ -2,7 +2,7 @@
     <div class="app-container">
         <div class="filter-container">
             <el-select v-model="listQuery.type" placeholder="列名" clearable class="filter-item" style="width: 150px">
-                <el-option v-for="col in columnOptions" :key="col.prop" :label="col.label" :value="col.prop" />
+                <el-option v-for="col in columnOptions" v-if="!col.hideInTable" :key="col.prop" :label="col.label" :value="col.prop" />
             </el-select>
             <el-select v-model="listQuery.bool" placeholder="逻辑" clearable style="width: 150px" class="filter-item">
                 <el-option v-for="(item, i) in boolOptions" :key="i" :label="i" :value="item" />

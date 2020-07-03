@@ -1,6 +1,8 @@
 import string from "less/lib/less/functions/string";
 import "./EasyForm.css";
 
+import SelectFormItem from './SelectFormItem'
+
 export default {
     props: {
         easyForm: Object,
@@ -31,9 +33,6 @@ export default {
         }
     },
     created() {
-        if (this.easyColumns.length > 11){
-            this.size = 'small'
-        }
         if (this.easyForm){
             this.form = this.makeProxy(this.easyForm)
             this.mode = 'edit'
@@ -44,6 +43,9 @@ export default {
             });
             this.form = this.makeProxy(form)
             this.mode = 'create'
+        }
+        if (this.form.length > 11){
+            this.size = 'small'
         }
     },
     methods: {
@@ -105,7 +107,7 @@ export default {
             } else {
                 this.methods.onSubmitUpdate(this.form)
             }
-        }
+        },
     },
     render(h) {
         const formItems = this.columns
@@ -148,31 +150,20 @@ export default {
                         </el-tooltip>
                     </el-form-item>;
                 } else if (c.valueType && c.valueType === "enum") {
-                    let a = [];
-                    if (c.enumItems) {
-                        a = [...c.enumItems];
-                    } else {
-                        a = [{
-                            value: "A部门", id: 1,
-                        },
-                            {
-                                value: "B部门", id: 2,
-                            }];
-                    }
-
-                    return <el-form-item label={c.label}>
-                        <el-select vModel={this.form[c.prop]} placeholder={"请选择" + c.label} style="width: 100%;"
-                                   disabled={disabled}>
-                            {
-                                a.map(item => <el-option label={item.value} value={item.id}></el-option>)
-                            }
-                        </el-select>
-                    </el-form-item>;
+                    return <SelectFormItem vModel={this.form[c.prop]} label={c.label} disabled={disabled} items={c.enumItems} url={c.enumUrl} />
+                    // return <el-form-item label={c.label}>
+                    //     <el-select vModel={this.form[c.prop]} placeholder={"请选择" + c.label} style="width: 100%;"
+                    //                disabled={disabled}>
+                    //         {
+                    //             a.map(item => <el-option label={item.value} value={item.id}></el-option>)
+                    //         }
+                    //     </el-select>
+                    // </el-form-item>;
                 }
                 return <el-form-item label={c.label}>
                     <el-input vModel={this.form[c.prop]} disabled={disabled}></el-input>
                 </el-form-item>;
-            });
+            })
 
 
         return (<el-form ref="form" model={this.form} label-width="80px" vOn:input={(v) => console.log(v)} size={this.size}>

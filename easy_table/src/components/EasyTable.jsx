@@ -33,13 +33,15 @@ export default {
             }
         },
         handleClose(done) {
-            this.$confirm('确认关闭？')
-                .then(_ => {
-                    this.dialogVisible = false
-                    done()
-                })
-                .catch(_ => {
-                })
+            this.dialogVisible = false
+            done()
+            // this.$confirm('确认关闭？')
+            //     .then(_ => {
+            //         this.dialogVisible = false
+            //         done()
+            //     })
+            //     .catch(_ => {
+            //     })
         },
         onEdit(props) {
             return () => {
@@ -48,8 +50,10 @@ export default {
             }
         },
         onCreate() {
-            this.form = undefined
-            this.dialogVisible = true
+            return () => {
+                this.form = undefined
+                this.dialogVisible = true
+            }
         }
     },
     render(h) {
@@ -86,7 +90,7 @@ export default {
                             }
                         }
                         scopedSlots={{
-                            right: (props) => <span style="float: right;margin-right: 10%;"><el-button icon="el-icon-plus" type="primary" onClick={ this.onCreate }>新建</el-button></span>
+                            right: (props) => <span style="float: right;margin-right: 10%;"><el-button icon="el-icon-plus" type="primary" onClick={ this.onCreate() }>新建</el-button></span>
                         }}
                     >
                         <el-table
@@ -122,7 +126,7 @@ export default {
                             title="提示"
                             visible={ this.dialogVisible }
                             width="35%">
-                            <EasyForm easyForm={ {...this.form} } easyColumns={ this.easyColumns } methods={
+                            <EasyForm easyForm={ this.form ? {...this.form} : undefined } easyColumns={ this.easyColumns } methods={
                                 {
                                     onCancel: () => {
                                         this.dialogVisible = false

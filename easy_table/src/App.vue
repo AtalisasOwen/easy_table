@@ -30,30 +30,14 @@
         data() {
             return {
                 show: false,
-                columns: [
-                    {
-                        prop: 'department.dprtId',
-                        label: '部门ID',
-                        valueType: 'enum',
-                        width: 100,
-                        enumUrl: '/api/XXX/',
-                        enumItems: [
-                            {
-                                value: 'A部门', id: 1
-                            },
-                            {
-                                value: 'B部门', id: 2
-                            }
-                        ],
-                        hideInTable: true
-                    },
-                ],
+                columns: [],
                 formMethods: {
                     onSubmitCreate: (form) => {
                         alert("无法新增")
                     },
                     onSubmitUpdate: (form) => {
                         changeEmployeeDetails(form).then(resp => console.log('OK'))
+                        // console.log(form.department)
                     }
                 },
                 tableMethods: {
@@ -72,9 +56,6 @@
           })
         },
         methods: {
-            func(){
-                return getColumns
-            }
         },
         components: {
             Hello, EasyTable
