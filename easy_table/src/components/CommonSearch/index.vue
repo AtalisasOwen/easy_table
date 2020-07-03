@@ -80,17 +80,16 @@
         name: 'CommonSearch',
         components: { Pagination },
         props: [
-            'getAllListByPaging',
-            'getAllListByPagingCount',
-            'getFilteredListByPaging',
-            'getFilteredListByPagingCount',
-            'pageList',
-            'columnOptions',
-            'getOptions',
-            'listLoading',
-            'refresh',
-            'sort',
-            'defaultType'
+            'getAllListByPaging',               // 分页获取数据接口
+            'getAllListByPagingCount',          // 数据总数量接口
+            'getFilteredListByPaging',          // 带筛选的分页接口
+            'getFilteredListByPagingCount',     // 带筛选的数量接口
+            'pageList',                         // 表格数据
+            'columnOptions',                    // 列选项
+            'getOptions',                       // 获取筛选数据接口
+            'listLoading',                      // 列表loading控制
+            'refresh',                          // 刷新控制
+            'sort'                              // 排序控制
         ],
         data() {
             return {
@@ -100,7 +99,7 @@
                     page: 1,
                     limit: 50,
                     bool: 'EQUALS',
-                    type: this.defaultType,
+                    type: null,
                     keyword: null,
                     realKeyword: null,
                     sort: null
@@ -145,36 +144,33 @@
                 this.$emit('update:refresh', true)
             },
             parseTag(tag) {
-                let s = ''
-                for (const key in this.columnOptions) {
-                    if (this.columnOptions[key] instanceof Array) {
-                        if (this.columnOptions[key][0] === tag.field) {
-                            s = s + key
-                        }
-                    } else {
-                        if (this.columnOptions[key] === tag.field) {
-                            s = s + key
-                        }
-                    }
+                console.log(tag)
+                let s = '';
+                for (const col of this.columnOptions) {
+                   if (col.prop === tag.field){
+                       s = col.label
+                       break
+                   }
                 }
                 for (const key in this.boolOptions) {
                     if (this.boolOptions[key] === tag.logit) {
-                        s = s + ' ' + key
+                        s = s + ' ' + key;
+                        break
                     }
                 }
-                s = s + ' ' + tag.show
+                s = s + ' ' + tag.show;
                 return s
             },
             addFilterEntity() {
                 if (this.listQuery.type && this.listQuery.bool && this.listQuery.keyword) {
                     const entity = {
-                        'field': this.listQuery.type instanceof Array ? this.listQuery.type[0] : this.listQuery.type,
+                        'field': this.listQuery.type,
                         'logit': this.listQuery.bool,
                         'value': this.listQuery.realKeyword == null ? this.listQuery.keyword : this.listQuery.realKeyword,
                         'show': this.listQuery.keyword
                     }
                     this.filterEntitys.push(entity)
-                    this.listQuery.type = this.defaultType
+                    this.listQuery.type = null
                     this.listQuery.bool = 'EQUALS'
                     this.listQuery.keyword = null
                     this.listQuery.realKeyword = null
@@ -187,7 +183,7 @@
                     cb([])
                     return
                 }
-                const fieldName = this.listQuery.type instanceof Array ? this.listQuery.type[0].split('.')[0] : this.listQuery.type.split('.')[0]
+                const fieldName = this.listQuery.type.split('.')[0]
                 this.getOptions(fieldName).then(resp => {
                     if (queryString === undefined || queryString === null) {
                         queryString = ''
@@ -218,6 +214,7 @@
             getListByPage(query) {
                 this.$emit('update:listLoading', true)
                 if (this.filterEntitys.length === 0) {
+                    // TODO 优化点
                     this.getAllListByPaging(query).then(resp => {
                         this.$emit('update:pageList', resp)
                         this.getAllListByPagingCount().then(resp2 => {

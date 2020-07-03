@@ -1,15 +1,12 @@
 <template>
     <div id="app">
-        <Hello/>
-        <EasyTable :easy-columns="columns"
-                   :data="data"
-                   :table-methods="tableMethods"
-                   :form-methods="formMethods">
-            <template #dprt.name="props">
-                <el-tag>{{ props.row.dprt.name }}</el-tag>
-            </template>
-            <template #ddd.dsdsd.birthday="props">
-                <span>{{ props.row.ddd.dsdsd.birthday.slice(0,10) }}</span>
+        <EasyTable
+                v-if="show"
+                :easy-columns="this.columns"
+                :table-methods="tableMethods"
+                :form-methods="formMethods">
+            <template #phone="props">
+                <el-tag size="small" v-if="props.row.phone">{{ props.row.phone }}</el-tag>
             </template>
         </EasyTable>
     </div>
@@ -18,85 +15,24 @@
 <script>
     import Hello from './components/Hello.jsx'
     import EasyTable from './components/EasyTable'
+    import {
+        getColumns,
+        getEmployeesDetailCount,
+        getEmployeesDetaildByPaging,
+        getEmployeesDetaildByPagingWithFilter,
+        getEmployeesDetaildByPagingWithFilterCount,
+        getEmployeeDetailFieldOptions,
+        changeEmployeeDetails
+    } from './api/employee'
 
     export default {
         name: 'App',
         data() {
             return {
-                count: 0,
-                data: [
-                    {
-                        date: '2016-05-02',
-                        name: '王小虎1',
-                        address: '上海市普陀区金沙江路 1518 弄',
-                        money: 6600,
-                        dprt: {
-                            id: 1,
-                            name: 'A部门',
-                            phone: '021-0000000'
-                        },
-                        ddd: {
-                            dsdsd: {
-                                birthday: '2019-01-02T08:00:00'
-                            }
-                        }
-                    },
-                    {
-                        date: '2016-05-02',
-                        name: '王小虎2',
-                        address: '上海市普陀区金沙江路 1518 弄',
-                        money: 26600,
-                        dprt: {
-                            id: 1,
-                            name: 'A部门',
-                            phone: '021-0000000'
-                        },
-                        ddd: {
-                            dsdsd: {
-                                birthday: '2019-01-02T08:00:00'
-                            }
-                        }
-                    },
-                    {
-                        date: '2016-05-02',
-                        name: '王小虎3',
-                        address: '上海市普陀区金沙江路 1518 弄',
-                        money: 20006600,
-                        dprt: {
-                            id: 1,
-                            name: 'A部门',
-                            phone: '021-0000000'
-                        },
-                        ddd: {
-                            dsdsd: {
-                                birthday: '2019-01-02T08:00:00'
-                            }
-                        }
-                    }
-                ],
+                show: false,
                 columns: [
                     {
-                        prop: 'date',
-                        label: '日期',
-                        valueType: 'date'
-                    },
-                    {
-                        prop: 'money',
-                        label: '工资',
-                        valueType: 'money',
-                        sortable: true
-                    },
-                    {
-                        prop: 'name',
-                        label: '姓名',
-                        sortable: true
-                    },
-                    {
-                        prop: 'address',
-                        label: '地址'
-                    },
-                    {
-                        prop: 'dprt.id',
+                        prop: 'department.dprtId',
                         label: '部门ID',
                         valueType: 'enum',
                         width: 100,
@@ -111,40 +47,35 @@
                         ],
                         hideInTable: true
                     },
-                    {
-                        prop: 'dprt.name',
-                        label: '部门名称',
-                        hideInForm: true,
-                        render: Hello
-                    },
-                    {
-                        prop: 'dprt.phone',
-                        label: '部门电话'
-                    },
-                    {
-                        prop: 'ddd.dsdsd.birthday',
-                        label: '生日',
-                        valueType: 'datetime',
-                        width: 180
-                    }
                 ],
                 formMethods: {
                     onSubmitCreate: (form) => {
-                        console.log('cccc')
-                        console.log(JSON.stringify(form))
+                        alert("无法新增")
                     },
                     onSubmitUpdate: (form) => {
-                        console.log('uuuu')
-                        console.log(JSON.stringify(form))
+                        changeEmployeeDetails(form).then(resp => console.log('OK'))
                     }
                 },
                 tableMethods: {
-                    sortChange: ({ prop, order }) => {
-                    }
+                    getAllListByPagingCount: getEmployeesDetailCount,
+                    getAllListByPaging: getEmployeesDetaildByPaging,
+                    getFilteredListByPaging: getEmployeesDetaildByPagingWithFilter,
+                    getFilteredListByPagingCount: getEmployeesDetaildByPagingWithFilterCount,
+                    getOptions: getEmployeeDetailFieldOptions
                 }
             }
         },
-        methods: {},
+        created(){
+          getColumns().then(resp => {
+              this.columns = resp
+              this.show = true
+          })
+        },
+        methods: {
+            func(){
+                return getColumns
+            }
+        },
         components: {
             Hello, EasyTable
         }

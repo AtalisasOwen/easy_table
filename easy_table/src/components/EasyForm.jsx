@@ -11,7 +11,8 @@ export default {
         return {
             form: null,
             columns: this.easyColumns,
-            mode: null
+            mode: null,
+            size: 'medium'
         };
     },
     watch:{
@@ -30,6 +31,9 @@ export default {
         }
     },
     created() {
+        if (this.easyColumns.length > 11){
+            this.size = 'small'
+        }
         if (this.easyForm){
             this.form = this.makeProxy(this.easyForm)
             this.mode = 'edit'
@@ -171,7 +175,7 @@ export default {
             });
 
 
-        return (<el-form ref="form" model={this.form} label-width="80px" vOn:input={(v) => console.log(v)}>
+        return (<el-form ref="form" model={this.form} label-width="80px" vOn:input={(v) => console.log(v)} size={this.size}>
             {...formItems}
             <el-form-item>
                 <el-button type="primary" onClick={this.onSubmit}>提交</el-button>

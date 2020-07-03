@@ -74,3 +74,11 @@ div:focus {
 .el-table {
     color: black;
 }
+
+.el-form-item {
+    margin-bottom: 10px;
+}
+
+.el-form-item--mini.el-form-item, .el-form-item--small.el-form-item {
+    margin-bottom: 5px;
+}
