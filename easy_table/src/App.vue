@@ -1,14 +1,14 @@
 <template>
     <div id="app">
         <EasyTable
-                v-if="show"
-                :easy-columns="this.columns"
-                :table-methods="tableMethods"
-                :form-methods="formMethods">
-            <template #phone="props">
-                <el-tag size="small" v-if="props.row.phone">{{ props.row.phone }}</el-tag>
-            </template>
-        </EasyTable>
+            v-if="show"
+            :easy-columns="this.columns"
+            :table-methods="tableMethods"
+            :form-methods="formMethods">
+        <template #phone="props">
+            <el-tag size="small" v-if="props.row.phone">{{ props.row.phone }}</el-tag>
+        </template>
+    </EasyTable>
     </div>
 </template>
 

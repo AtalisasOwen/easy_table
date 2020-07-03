@@ -1,8 +1,8 @@
 <template>
     <el-form-item :label="label">
-        <el-select :value="value.toString()" @input="$emit('input', $event)" :placeholder="'请选择' + label" style="width: 100%;"
+        <el-select :value="value" @input="$emit('input', $event)" :placeholder="'请选择' + label" style="width: 100%;"
                    :disabled="disabled">
-            <el-option v-for="item in optionItems" :label="item.value" :value="item.id" :key="item.id"></el-option>
+            <el-option v-for="item in optionItems" :label="item.label" :value="item.value" :key="item.value"></el-option>
         </el-select>
     </el-form-item>
 </template>
