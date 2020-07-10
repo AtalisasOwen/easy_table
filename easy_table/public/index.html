@@ -14,28 +14,28 @@
     <div id="app" style="" ></div>
     <!-- built files will be auto injected -->
 
-    <canvas id="c" width="600" height="600" style="position:fixed;top:0; z-index:99999;opacity: 0.3;pointer-events:none;"></canvas>
+<!--    <canvas id="c" width="600" height="600" style="position:fixed;top:0; z-index:99999;opacity: 0.1;pointer-events:none;"></canvas>-->
 
-    <script id="shader-fs" type="x-shader/x-fragment">
-    #ifdef GL_ES
-      precision highp float;
-      #endif
-    void main(void) {
-      gl_FragColor = vec4(0.2, 0.3, 0.4, 1.0);
-    }
-  </script>
+<!--    <script id="shader-fs" type="x-shader/x-fragment">-->
+<!--    #ifdef GL_ES-->
+<!--      precision highp float;-->
+<!--      #endif-->
+<!--    void main(void) {-->
+<!--      gl_FragColor = vec4(0.2, 0.3, 0.4, 1.0);-->
+<!--    }-->
+<!--  </script>-->
 
-    <script id="shader-vs" type="x-shader/x-vertex">
-    attribute vec3 vertexPosition;
+<!--    <script id="shader-vs" type="x-shader/x-vertex">-->
+<!--    attribute vec3 vertexPosition;-->
 
-  	uniform mat4 modelViewMatrix;
-  	uniform mat4 perspectiveMatrix;
+<!--  	uniform mat4 modelViewMatrix;-->
+<!--  	uniform mat4 perspectiveMatrix;-->
 
-   	void main(void) {
-  		gl_Position = perspectiveMatrix * modelViewMatrix * vec4(  vertexPosition, 1.0);
-  	}
-  </script>
+<!--   	void main(void) {-->
+<!--  		gl_Position = perspectiveMatrix * modelViewMatrix * vec4(  vertexPosition, 1.0);-->
+<!--  	}-->
+<!--  </script>-->
 
-    <script src="web.js"></script>
+<!--    <script src="web.js"></script>-->
   </body>
 </html>
