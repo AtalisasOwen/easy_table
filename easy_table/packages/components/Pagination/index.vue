@@ -34,7 +34,7 @@
             pageSizes: {
                 type: Array,
                 default() {
-                    return [5, 10, 20, 50, 200]
+                    return [5, 10, 20, 50, 200, 500]
                 }
             },
             layout: {

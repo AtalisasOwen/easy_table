@@ -1,11 +1,10 @@
 
-
-<script>
 import EasyForm from './EasyForm'
 import CommonSearch from './CommonSearch'
 
 
 export default {
+    name: 'EasyTable',
     props: {
         easyColumns: Array,
         formMethods: Object,
@@ -20,9 +19,13 @@ export default {
             listLoading: false,
             refresh: false,
             data: [],
+            selectedColumns: [],
+            selectedColumnsVisible: false
         }
     },
     created(){
+    },
+    watch:{
     },
     methods: {
         sortFn(data) {
@@ -57,11 +60,24 @@ export default {
                 this.form = undefined
                 this.dialogVisible = true
             }
+        },
+        onSelectColumns(){
+            return () => {
+
+            }
         }
     },
     render(h) {
+
+        const options = this.easyColumns
+            .filter(c => !c.hideInTable)
+            .map(c => <el-option
+                    label={ c.label }
+                    value={ c.prop } />);
+
         const elColumns = this.easyColumns
             .filter(c => !c.hideInTable)
+            .filter(c => this.selectedColumns.indexOf(c.prop) < 0)
             .map(c =>
                 <el-table-column
                     prop={ c.prop }
@@ -73,7 +89,24 @@ export default {
                         default: this.$scopedSlots[c.prop]
                     } }
                 >
-                </el-table-column>)
+                </el-table-column>);
+
+
+        const customColumns = [<el-table-column
+            fixed="right"
+            label="操作"
+            width="120"
+            scopedSlots={ {
+                default:  this.$scopedSlots['custom'] ? this.$scopedSlots['custom'] : props => {
+                    return (
+                        <span>
+                                    <el-button onClick={ this.onEdit(props) } type="text" size="small">编辑</el-button>
+                                    <el-button type="text" size="small">删除</el-button>
+                                </span>
+                    )
+                },
+            } }>
+        </el-table-column>];
 
             return (
                 <div>
@@ -93,7 +126,18 @@ export default {
                             }
                         }
                         scopedSlots={{
-                            right: (props) => <span style="float: right;margin-right: 10%;"><el-button icon="el-icon-plus" type="primary" onClick={ this.onCreate() }>新建</el-button></span>
+                            right: (props) => <span style="float: right;margin-right: 2%;"><el-button icon="el-icon-plus" type="primary" onClick={ this.onCreate() }>新建</el-button>
+                             <el-select
+                                vModel={this.selectedColumns}
+                                multiple={true}
+                                collapseTags={true}
+                                style="margin-left: 20px;"
+                                placeholder="请选择不展示列">
+                                {
+                                    options
+                                }
+                            </el-select>
+                            </span>
                         }}
                     >
                         <el-table
@@ -108,21 +152,7 @@ export default {
                             vOn:sort-change={ this.sortFn }
                         >
                             { ...elColumns }
-                            <el-table-column
-                                fixed="right"
-                                label="操作"
-                                width="180"
-                                scopedSlots={ {
-                                    default: props => {
-                                        return (
-                                            <span>
-                                    <el-button onClick={ this.onEdit(props) } type="text" size="small">编辑</el-button>
-                                    <el-button type="text" size="small">删除</el-button>
-                                </span>
-                                        )
-                                    }
-                                } }>
-                            </el-table-column>
+                            {...customColumns}
                         </el-table>
                         <el-dialog
                             before-close={ this.handleClose }
@@ -154,5 +184,3 @@ export default {
 
     }
 }
-
-</script>

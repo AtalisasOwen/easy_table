@@ -215,7 +215,7 @@
                 this.$emit('update:listLoading', true)
                 if (this.filterEntitys.length === 0) {
                     // TODO 优化点
-                    this.getAllListByPaging(query).then(resp => {
+                    this.getAllListByPaging(this.listQuery).then(resp => {
                         this.$emit('update:pageList', resp)
                         this.getAllListByPagingCount().then(resp2 => {
                             this.total = resp2

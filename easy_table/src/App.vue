@@ -13,8 +13,7 @@
 </template>
 
 <script>
-    import Hello from './components/Hello.jsx'
-    import EasyTable from './components/EasyTable'
+    import EasyTable from '../packages/components/EasyTable'
     import {
         getColumns,
         getEmployeesDetailCount,
@@ -58,7 +57,7 @@
         methods: {
         },
         components: {
-            Hello, EasyTable
+            EasyTable
         }
     }
 </script>

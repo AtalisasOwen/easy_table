@@ -1,10 +1,10 @@
-import EasyForm from './components/EasyForm.vue'
-import EasyTable from './components/EasyTable.vue'
+import EasyForm from './components/EasyForm.jsx'
+import EasyTable from './components/EasyTable.jsx'
 
 const components = [EasyTable, EasyForm]
 
 const install = function (Vue) {
-    components.map(com => Vue.component(com.name, com))
+    components.forEach(com => Vue.component(com.name, com))
 }
 
 if (typeof window !== 'undefined' && window.Vue){
@@ -13,5 +13,6 @@ if (typeof window !== 'undefined' && window.Vue){
 
 export default {
     install,
-    ...components
+    EasyForm,
+    EasyTable
 }

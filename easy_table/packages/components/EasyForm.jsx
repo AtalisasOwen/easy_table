@@ -1,9 +1,10 @@
-import string from "less/lib/less/functions/string";
+
 import "./EasyForm.css";
 
 import SelectFormItem from './SelectFormItem'
 
 export default {
+    name: 'EasyForm',
     props: {
         easyForm: Object,
         easyColumns: Array,
@@ -33,6 +34,12 @@ export default {
         }
     },
     created() {
+        if (this.easyColumns.length > 11){
+            this.size = 'small'
+        }
+        if (this.easyColumns.length > 15){
+            this.size = 'mini'
+        }
         if (this.easyForm){
             this.form = this.makeProxy(this.easyForm)
             this.mode = 'edit'
@@ -43,12 +50,6 @@ export default {
             });
             this.form = this.makeProxy(form)
             this.mode = 'create'
-        }
-        if (this.form.length > 11){
-            this.size = 'small'
-        }
-        if (this.form.length > 15){
-            this.size = 'mini'
         }
     },
     methods: {
