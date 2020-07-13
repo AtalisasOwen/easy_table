@@ -1,0 +1,5 @@
+.el-input-number.is-without-controls .el-input__inner {
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: left;
+}
