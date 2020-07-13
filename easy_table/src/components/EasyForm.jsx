@@ -47,6 +47,9 @@ export default {
         if (this.form.length > 11){
             this.size = 'small'
         }
+        if (this.form.length > 15){
+            this.size = 'mini'
+        }
     },
     methods: {
         formatMoney(value) {

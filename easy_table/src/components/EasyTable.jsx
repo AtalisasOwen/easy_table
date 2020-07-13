@@ -110,7 +110,7 @@ export default {
                                 label="操作"
                                 width="180"
                                 scopedSlots={ {
-                                    default: props => {
+                                    default:  this.$scopedSlots['custom'] ? this.$scopedSlots['custom'] : props => {
                                         return (
                                             <span>
                                     <el-button onClick={ this.onEdit(props) } type="text" size="small">编辑</el-button>
