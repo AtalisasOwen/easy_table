@@ -2,6 +2,7 @@
     <div id="app">
         <EasyTable
             v-if="show"
+            :default-query.sync="listQuery"
             :easy-columns="this.columns"
             :table-methods="tableMethods"
             :form-methods="formMethods">
@@ -28,6 +29,7 @@
         name: 'App',
         data() {
             return {
+                listQuery: {},
                 show: false,
                 columns: [],
                 formMethods: {
@@ -53,6 +55,15 @@
               this.columns = resp
               this.show = true
           })
+        },
+        watch:{
+            listQuery: {
+                handler(newValue, oldValue) {
+                    console.log(newValue)
+                },
+                immediate: true,
+                deep: true
+            }
         },
         methods: {
         },

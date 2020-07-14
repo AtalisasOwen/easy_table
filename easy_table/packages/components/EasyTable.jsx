@@ -6,9 +6,10 @@ import CommonSearch from './CommonSearch'
 export default {
     name: 'EasyTable',
     props: {
-        easyColumns: Array,
-        formMethods: Object,
-        tableMethods: Object
+        easyColumns: Array,         // 列定义
+        formMethods: Object,        // onSubmitCreate, onSubmitUpdate
+        tableMethods: Object,       // getAllListByPagingCount, getAllListByPaging, getFilteredListByPaging, getFilteredListByPagingCount, getOptions
+        defaultQuery: Object,       // 传出表格中的查询条件
     },
     data() {
         return {
@@ -20,12 +21,20 @@ export default {
             refresh: false,
             data: [],
             selectedColumns: [],
-            selectedColumnsVisible: false
+            selectedColumnsVisible: false,
+            listQuery: {}
         }
     },
     created(){
     },
     watch:{
+        listQuery: {
+            handler(newValue, oldValue) {
+                this.$emit('update:defaultQuery', newValue)
+            },
+            immediate: true,
+            deep: true
+        }
     },
     methods: {
         sortFn(data) {
@@ -117,11 +126,13 @@ export default {
                         listLoading={this.listLoading}
                         sort={this.sort}
                         refresh={this.refresh}
+                        defaultQuery={this.listQuery}
                         on={
                             {
                                 'update:listLoading': newValue => this.listLoading = newValue,
                                 'update:pageList': newValue => this.data = newValue,
-                                'update:refresh': newValue => this.refresh = newValue
+                                'update:refresh': newValue => this.refresh = newValue,
+                                'update:defaultQuery': newValue => this.listQuery = newValue
 
                             }
                         }

@@ -40,7 +40,7 @@
         </div>
         <div>
             <el-tag
-                    v-for="(tag, ii) in filterEntitys"
+                    v-for="(tag, ii) in listQuery.filterEntitys"
                     :key="ii"
                     closable
                     @close="handleDeleteTag(tag)"
@@ -50,7 +50,7 @@
         </div>
         <slot />
         <pagination
-                :total="total"
+                :total="listQuery.total"
                 :page.sync="listQuery.page"
                 :limit.sync="listQuery.limit"
                 @pagination="getListByPage"
@@ -89,11 +89,11 @@
             'getOptions',                       // 获取筛选数据接口
             'listLoading',                      // 列表loading控制
             'refresh',                          // 刷新控制
-            'sort'                              // 排序控制
+            'sort',                              // 排序控制,
+            'defaultQuery'                      // 双向绑定，获取分页组件内部的参数！！ 2020-07-13新增
         ],
         data() {
             return {
-                total: 100,
                 logit: 'and',
                 listQuery: {
                     page: 1,
@@ -102,7 +102,9 @@
                     type: null,
                     keyword: null,
                     realKeyword: null,
-                    sort: null
+                    sort: null,
+                    total: 100,
+                    filterEntitys: []
                 },
                 boolOptions: {
                     '值中含有': 'CONTAINS',
@@ -114,7 +116,7 @@
                 },
                 list: null,
                 dialogFormVisible: false,
-                filterEntitys: []
+
             }
         },
         created() {
@@ -133,13 +135,20 @@
             },
             logit(newVal, oldValue) {
                 this.$emit('update:refresh', true)
+            },
+            listQuery: {
+                handler(newValue, oldValue) {
+                    this.$emit('update:defaultQuery', newValue)
+                },
+                immediate: true,
+                deep: true
             }
         },
         methods: {
             handleDeleteTag(tag) {
-                const s = new Set(this.filterEntitys)
+                const s = new Set(this.listQuery.filterEntitys)
                 s.delete(tag)
-                this.filterEntitys = [...s]
+                this.listQuery.filterEntitys = [...s]
                 this.listQuery.page = 1
                 this.$emit('update:refresh', true)
             },
@@ -169,7 +178,7 @@
                         'value': this.listQuery.realKeyword == null ? this.listQuery.keyword : this.listQuery.realKeyword,
                         'show': this.listQuery.keyword
                     }
-                    this.filterEntitys.push(entity)
+                    this.listQuery.filterEntitys.push(entity)
                     this.listQuery.type = null
                     this.listQuery.bool = 'EQUALS'
                     this.listQuery.keyword = null
@@ -199,13 +208,13 @@
             handleFilter() {
                 this.listQuery.page = 1
                 this.$emit('update:listLoading', true)
-                if (this.filterEntitys.length === 0) {
+                if (this.listQuery.filterEntitys.length === 0) {
                     this.getListByPage(this.listQuery)
                 } else {
-                    this.getFilteredListByPaging(this.listQuery, this.filterEntitys, this.logit).then(resp2 => {
+                    this.getFilteredListByPaging(this.listQuery, this.listQuery.filterEntitys, this.logit).then(resp2 => {
                         this.$emit('update:pageList', resp2)
-                        this.getFilteredListByPagingCount(this.filterEntitys, this.logit).then(resp3 => {
-                            this.total = resp3
+                        this.getFilteredListByPagingCount(this.listQuery.filterEntitys, this.logit).then(resp3 => {
+                            this.listQuery.total = resp3
                             this.$emit('update:listLoading', false)
                         })
                     })
@@ -213,20 +222,20 @@
             },
             getListByPage(query) {
                 this.$emit('update:listLoading', true)
-                if (this.filterEntitys.length === 0) {
+                if (this.listQuery.filterEntitys.length === 0) {
                     // TODO 优化点
                     this.getAllListByPaging(this.listQuery).then(resp => {
                         this.$emit('update:pageList', resp)
                         this.getAllListByPagingCount().then(resp2 => {
-                            this.total = resp2
+                            this.listQuery.total = resp2
                             this.$emit('update:listLoading', false)
                         })
                     })
                 } else {
-                    this.getFilteredListByPaging(this.listQuery, this.filterEntitys, this.logit).then(resp2 => {
+                    this.getFilteredListByPaging(this.listQuery, this.listQuery.filterEntitys, this.logit).then(resp2 => {
                         this.$emit('update:pageList', resp2)
-                        this.getFilteredListByPagingCount(this.filterEntitys, this.logit).then(resp3 => {
-                            this.total = resp3
+                        this.getFilteredListByPagingCount(this.listQuery.filterEntitys, this.logit).then(resp3 => {
+                            this.listQuery.total = resp3
                             this.$emit('update:listLoading', false)
                         })
                     })
