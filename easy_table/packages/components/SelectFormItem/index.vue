@@ -41,7 +41,8 @@
                 }else{
                     axios.get(this.url).then(resp => {
                         this.optionItems = resp.data.data
-                        this.strVal = this.optionItems.filter(i => i.id === this.value.toString())[0].value
+                        const item = this.optionItems.filter(i => i.id === this.value.toString())
+                        this.strVal = item[0] ? item[0].value: ''
                     })
                 }
             }

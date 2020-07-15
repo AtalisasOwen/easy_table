@@ -169,9 +169,30 @@ export default {
                 </el-form-item>;
             })
 
+        let renderFormItems = [];
+
+        if(formItems.length > 30){
+            for (let i = 0; i < formItems.length ; i += 3){
+                renderFormItems.push(<el-row>
+                    <el-col span={8}>{formItems[i]}</el-col>
+                    <el-col span={8}>{formItems[i+1]}</el-col>
+                    <el-col span={8}>{formItems[i+2]}</el-col>
+                </el-row>)
+            }
+        } else if (formItems.length > 12){
+            for (let i = 0; i < formItems.length ; i += 2){
+                renderFormItems.push(<el-row>
+                    <el-col span={12}>{formItems[i]}</el-col>
+                    <el-col span={12}>{formItems[i+1]}</el-col>
+                </el-row>)
+            }
+        }else{
+            renderFormItems = formItems
+        }
+
 
         return (<el-form ref="form" model={this.form} label-width="80px" vOn:input={(v) => console.log(v)} size={this.size}>
-            {...formItems}
+            {...renderFormItems}
             <el-form-item>
                 <el-button type="primary" onClick={this.onSubmit}>提交</el-button>
                 <el-button onClick={ this.methods.onCancel }>取消</el-button>

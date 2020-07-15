@@ -1,7 +1,10 @@
 
 import EasyForm from './EasyForm'
 import CommonSearch from './CommonSearch'
+import './EasyTable.css'
+import { PlTable, PlTableColumn, PlxTableGrid, PlxTableColumn } from 'pl-table';
 
+import 'pl-table/themes/index.css' // 引入样式（必须引入)，vuecli3.0不需要配置，cli2.0请查看webpack是否配置了url-loader对woff，ttf文件的引用,不配置会报错哦
 
 export default {
     name: 'EasyTable',
@@ -10,6 +13,12 @@ export default {
         formMethods: Object,        // onSubmitCreate, onSubmitUpdate
         tableMethods: Object,       // getAllListByPagingCount, getAllListByPaging, getFilteredListByPaging, getFilteredListByPagingCount, getOptions
         defaultQuery: Object,       // 传出表格中的查询条件
+        onlyTable: Boolean,         // 只展示表格
+        // slot: custom, buttons,  `prop`
+    },
+    components:{
+        PlTable,
+        PlTableColumn
     },
     data() {
         return {
@@ -22,7 +31,9 @@ export default {
             data: [],
             selectedColumns: [],
             selectedColumnsVisible: false,
-            listQuery: {}
+            listQuery: {},
+            renderRowsStart: 0,
+            renderRowsEnd: 20
         }
     },
     created(){
@@ -74,6 +85,13 @@ export default {
             return () => {
 
             }
+        },
+        onScroll(params){
+            // this.renderRowsStart = Math.round(params.scrollTop / 35)
+            // this.renderRowsEnd = this.renderRowsStart + Math.round(params.clientHeight / 35)
+            console.log(params)
+        },
+        hidingRow({rowIndex}){
         }
     },
     render(h) {
@@ -88,7 +106,8 @@ export default {
             .filter(c => !c.hideInTable)
             .filter(c => this.selectedColumns.indexOf(c.prop) < 0)
             .map(c =>
-                <el-table-column
+                <pl-table-column
+                    // className={ this.selectedColumns.indexOf(c.prop) < 0 ? "" : "easy-hidden"}
                     prop={ c.prop }
                     label={ c.label }
                     show-overflow-tooltip={ true }
@@ -98,11 +117,11 @@ export default {
                         default: this.$scopedSlots[c.prop]
                     } }
                 >
-                </el-table-column>);
+                </pl-table-column>);
 
-
-        const customColumns = [<el-table-column
+        const customColumns = [<pl-table-column
             fixed="right"
+            prop={ 'custom' }
             label="操作"
             width="120"
             scopedSlots={ {
@@ -114,12 +133,15 @@ export default {
                                 </span>
                     )
                 },
-            } }>
-        </el-table-column>];
+            } }
+        >
+        </pl-table-column>];
+
 
             return (
                 <div>
                     <CommonSearch
+                        showFilter={!this.onlyTable}
                         columnOptions={this.easyColumns}
                         props={this.tableMethods}
                         vpageList={this.data}
@@ -137,7 +159,10 @@ export default {
                             }
                         }
                         scopedSlots={{
-                            right: (props) => <span style="float: right;margin-right: 2%;"><el-button icon="el-icon-plus" type="primary" onClick={ this.onCreate() }>新建</el-button>
+                            right: (props) => <span style="float: right;margin-right: 2%;">
+                                  <el-button type="primary" icon="el-icon-plus" circle onClick={ this.onCreate() }></el-button>
+                                  <el-button type="info" icon="el-icon-refresh" circle onClick={ () => this.refresh = true }></el-button>
+                                    { this.$scopedSlots['buttons'] ? this.$scopedSlots['buttons']() : null }
                              <el-select
                                 vModel={this.selectedColumns}
                                 multiple={true}
@@ -151,20 +176,25 @@ export default {
                             </span>
                         }}
                     >
-                        <el-table
+                        <pl-table
+                            useVirtual={true}
+                            rowHeight={35}
+                            rowKey={'employeeId'}
+                            excessRows={1}
                             data={ this.data }
                             style="width: 100%"
                             vLoading={this.listLoading}
                             max-height={600}
-                            cell-style={{padding: '1px'}}
+                            cell-style={{padding: '1px', color: 'black'}}
                             border={true}
                             fit={true}
                             highlightCurrentRow={true}
                             vOn:sort-change={ this.sortFn }
+                            rowClassName={this.hidingRow}
                         >
                             { ...elColumns }
                             {...customColumns}
-                        </el-table>
+                        </pl-table>
                         <el-dialog
                             before-close={ this.handleClose }
                             title="提示"

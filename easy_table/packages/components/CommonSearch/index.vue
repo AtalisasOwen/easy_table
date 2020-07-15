@@ -1,6 +1,6 @@
 <template>
     <div class="app-container">
-        <div class="filter-container">
+        <div class="filter-container" v-if="showFilter">
             <el-select v-model="listQuery.type" placeholder="列名" clearable class="filter-item" style="width: 150px">
                 <el-option v-for="col in columnOptions" v-if="!col.hideInTable" :key="col.prop" :label="col.label" :value="col.prop" />
             </el-select>
@@ -90,14 +90,15 @@
             'listLoading',                      // 列表loading控制
             'refresh',                          // 刷新控制
             'sort',                              // 排序控制,
-            'defaultQuery'                      // 双向绑定，获取分页组件内部的参数！！ 2020-07-13新增
+            'defaultQuery',                      // 双向绑定，获取分页组件内部的参数！！ 2020-07-13新增
+            'showFilter'
         ],
         data() {
             return {
                 logit: 'and',
                 listQuery: {
                     page: 1,
-                    limit: 50,
+                    limit: 500,
                     bool: 'EQUALS',
                     type: null,
                     keyword: null,
@@ -220,22 +221,22 @@
                     })
                 }
             },
-            getListByPage(query) {
-                this.$emit('update:listLoading', true)
+            async getListByPage(query) {
+                await this.$emit('update:listLoading', true)
                 if (this.listQuery.filterEntitys.length === 0) {
                     // TODO 优化点
                     this.getAllListByPaging(this.listQuery).then(resp => {
-                        this.$emit('update:pageList', resp)
                         this.getAllListByPagingCount().then(resp2 => {
                             this.listQuery.total = resp2
+                            this.$emit('update:pageList', resp)
                             this.$emit('update:listLoading', false)
                         })
                     })
                 } else {
                     this.getFilteredListByPaging(this.listQuery, this.listQuery.filterEntitys, this.logit).then(resp2 => {
-                        this.$emit('update:pageList', resp2)
                         this.getFilteredListByPagingCount(this.listQuery.filterEntitys, this.logit).then(resp3 => {
                             this.listQuery.total = resp3
+                            this.$emit('update:pageList', resp2)
                             this.$emit('update:listLoading', false)
                         })
                     })

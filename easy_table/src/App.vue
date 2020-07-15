@@ -6,9 +6,13 @@
             :easy-columns="this.columns"
             :table-methods="tableMethods"
             :form-methods="formMethods">
-        <template #phone="props">
-            <el-tag size="small" v-if="props.row.phone">{{ props.row.phone }}</el-tag>
-        </template>
+            <template #phone="props">
+                <el-tag size="small" v-if="props.row.phone">{{ props.row.phone }}</el-tag>
+            </template>
+            <template #buttons="props">
+                    <el-button type="warning" icon="el-icon-star-off" circle @click="() => $alert('aaa')"></el-button>
+                    <el-button type="danger" icon="el-icon-delete" circle></el-button>
+            </template>
     </EasyTable>
     </div>
 </template>
@@ -59,7 +63,7 @@
         watch:{
             listQuery: {
                 handler(newValue, oldValue) {
-                    console.log(newValue)
+                    // console.log(newValue)
                 },
                 immediate: true,
                 deep: true
