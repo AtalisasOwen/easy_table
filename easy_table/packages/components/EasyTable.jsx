@@ -18,7 +18,9 @@ export default {
     },
     components:{
         PlTable,
-        PlTableColumn
+        PlTableColumn,
+        PlxTableGrid,
+        PlxTableColumn
     },
     data() {
         return {
@@ -37,6 +39,8 @@ export default {
         }
     },
     created(){
+    },
+    mounted(){
     },
     watch:{
         listQuery: {
@@ -108,6 +112,7 @@ export default {
             .map(c =>
                 <pl-table-column
                     // className={ this.selectedColumns.indexOf(c.prop) < 0 ? "" : "easy-hidden"}
+                    fixed={c.fixed}
                     prop={ c.prop }
                     label={ c.label }
                     show-overflow-tooltip={ true }
@@ -177,10 +182,11 @@ export default {
                         }}
                     >
                         <pl-table
+                            ref="plTable"
                             useVirtual={true}
                             rowHeight={35}
                             rowKey={'employeeId'}
-                            excessRows={1}
+                            excessRows={5}
                             data={ this.data }
                             style="width: 100%"
                             vLoading={this.listLoading}
@@ -188,7 +194,7 @@ export default {
                             cell-style={{padding: '1px', color: 'black'}}
                             border={true}
                             fit={true}
-                            highlightCurrentRow={true}
+                            // highlightCurrentRow={true}
                             vOn:sort-change={ this.sortFn }
                             rowClassName={this.hidingRow}
                         >

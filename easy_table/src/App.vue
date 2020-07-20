@@ -60,6 +60,8 @@
               this.show = true
           })
         },
+        mounted(){
+        },
         watch:{
             listQuery: {
                 handler(newValue, oldValue) {
