@@ -4676,9 +4676,9 @@ lodash.uniq@^4.5.0:
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
 lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.3:
-  version "4.17.15"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+  version "4.17.20"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
+  integrity sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA==
 
 log-symbols@^2.2.0:
   version "2.2.0"
@@ -5583,6 +5583,25 @@ pkg-dir@^4.1.0:
   integrity sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==
   dependencies:
     find-up "^4.0.0"
+
+pl-table@^2.7.5:
+  version "2.7.5"
+  resolved "https://registry.yarnpkg.com/pl-table/-/pl-table-2.7.5.tgz#fd01d3e564fe5450ab23f0c96c0718fe670b0543"
+  integrity sha512-uzFetO3nEF8C40cADJpAJPu297X/6kuOqrP8XIPsWRay4mBgNt3FSokg6s/3wpnrLdXwkz6i9FscjkEaM0A7Pw==
+  dependencies:
+    async-validator "~1.8.1"
+    deepmerge "^1.2.0"
+    normalize-wheel "^1.0.1"
+    plxy-grid "^2.8.3"
+    resize-observer-polyfill "^1.5.0"
+    throttle-debounce "^1.0.1"
+    vuedraggable "^2.23.2"
+    xe-utils "^2.3.0"
+
+plxy-grid@^2.8.3:
+  version "2.8.3"
+  resolved "https://registry.yarnpkg.com/plxy-grid/-/plxy-grid-2.8.3.tgz#a3c0c9ce920fcfa95aa55ba027c81422963174be"
+  integrity sha512-udl+J0sCjTyLJScMVnAfSTvyqyd9VbNlZ76ywMTqaKZKLnGykuOaUr77YLKH6OMgfBoX30MftjRticvjNca98g==
 
 pnp-webpack-plugin@^1.6.4:
   version "1.6.4"
@@ -6664,6 +6683,11 @@ sort-keys@^1.0.0:
   dependencies:
     is-plain-obj "^1.0.0"
 
+sortablejs@^1.10.1:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.12.0.tgz#ee6d7ece3598c2af0feb1559d98595e5ea37cbd6"
+  integrity sha512-bPn57rCjBRlt2sC24RBsu40wZsmLkSo2XeqG8k6DC1zru5eObQUIPPZAQG7W2SJ8FZQYq+BEJmvuw1Zxb3chqg==
+
 source-list-map@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/source-list-map/-/source-list-map-2.0.1.tgz#3993bd873bfc48479cca9ea3a547835c7c154b34"
@@ -7454,6 +7478,11 @@ vue-loader@^15.9.2:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-property-decorator@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/vue-property-decorator/-/vue-property-decorator-9.0.0.tgz#0a5f6d47d33ca62a8876108ccfa65c2c4fb7325a"
+  integrity sha512-oegTNPItuHOkW0AP1MnbdNwkmyhfsUIIXvIRHpgC18tVoEo21/i6kItyeekjMs8JgZJeuHzsaTc/DZaJFH4IWQ==
+
 vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/vue-style-loader/-/vue-style-loader-4.1.2.tgz#dedf349806f25ceb4e64f3ad7c0a44fba735fcf8"
@@ -7479,6 +7508,13 @@ vue@^2.6.11:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
+
+vuedraggable@^2.23.2:
+  version "2.24.1"
+  resolved "https://registry.yarnpkg.com/vuedraggable/-/vuedraggable-2.24.1.tgz#304abd7644dde05c1f199a227bf9e9107f56197a"
+  integrity sha512-G1fxO1oshx+WLdieSGl6jSJdlHOQFga1FpjuUpgXldbpKNzxpjsGn4xYNnRHVrOAqm8aG5FfpdQlh5LHesxCeA==
+  dependencies:
+    sortablejs "^1.10.1"
 
 watchpack-chokidar2@^2.0.0:
   version "2.0.0"
@@ -7717,6 +7753,11 @@ ws@^6.0.0, ws@^6.2.1:
   integrity sha512-GIyAXC2cB7LjvpgMt9EKS2ldqr0MTrORaleiOno6TweZ6r3TKtoFQWay/2PceJ3RuBasOHzXNn5Lrw1X0bEjqA==
   dependencies:
     async-limiter "~1.0.0"
+
+xe-utils@^2.3.0:
+  version "2.7.13"
+  resolved "https://registry.yarnpkg.com/xe-utils/-/xe-utils-2.7.13.tgz#78c214bda2b1b5b3f2af0313ec656b5d5e848cff"
+  integrity sha512-sdcb6jzbn/qt76W1QBxpkWHukpz0N8Ro6nf/FtlTmFKS3CoIcsX1EU7sizsVl0ThmyfWUYIKwS9sIqJ49oIuTg==
 
 xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.2"
