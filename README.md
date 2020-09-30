@@ -21,7 +21,6 @@ npm install @gwt123/easy_table
 ```json
 "dependencies": {
     "@gwt123/easy_table": "^0.1.7",
-    ...
 }
 ```
 ### 使用示例
@@ -131,7 +130,7 @@ npm install @gwt123/easy_table
 
 ![搜狗截图20200930092945](images\搜狗截图20200930092945.png)
 
-```json
+```js
 {
 	label: "工号"					// 列名
 	prop: "employeeId"			 // 列对应的属性，支持a.b的形式
