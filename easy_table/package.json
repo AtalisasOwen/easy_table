@@ -2,7 +2,7 @@
   "name": "@gwt123/easy_table",
   "description": "A Vue.js project",
   "author": "Atalisas Owen",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "license": "Apache",
   "private": false,
   "main": "dist/easy-table.umd.js",
@@ -12,11 +12,14 @@
     "lib": "vue-cli-service build --mode package --modern --target lib --name easy-table packages/index.js"
   },
   "dependencies": {
+    "ag-grid-community": "^23.2.1",
+    "ag-grid-vue": "^23.2.1",
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
     "element-ui": "^2.13.2",
     "pl-table": "^2.7.5",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-property-decorator": "^9.0.0"
   },
   "devDependencies": {
     "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
