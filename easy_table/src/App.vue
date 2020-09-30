@@ -2,7 +2,7 @@
     <div id="app">
         <EasyTable
             v-if="show"
-            :default-query.sync="listQuery"
+           :default-query.sync="listQuery"
             :easy-columns="this.columns"
             :table-methods="tableMethods"
             :form-methods="formMethods">
